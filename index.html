@@ -14,6 +14,8 @@
             </select>
         </h2>
 
+        <Button onclick="resetArray()">Reset</Button>
+
     </div>
 
     <style>
@@ -52,21 +54,26 @@
 
         var cubes = [];
 
-        function createArray(){
-            var material = new THREE.MeshLambertMaterial({color: 0xFFCC00});
+        var material = new THREE.MeshLambertMaterial({color: 0xFFCC00});
 
-            cubes = [];
+        for(var i=0; i<100; i++){
+            var height = Math.floor(Math.random() * 60) + 1;
+            var geometry = new THREE.BoxGeometry(1, height, 1); 
+            var cube = new THREE.Mesh(geometry, material);
+            scene.add(cube)
+            cube.position.x=i-75;
+            cube.position.y=(height/2)-15;
+            cubes.push(cube);
+        }
 
-            for(var i=0; i<100; i++){
+
+        function resetArray(){
+            for(var i=0; i<cubes.length; i++){
                 var height = Math.floor(Math.random() * 60) + 1;
-                var geometry = new THREE.BoxGeometry(1, height, 1); 
-                var cube = new THREE.Mesh(geometry, material);
-                scene.add(cube)
-                cube.position.x=i-75;
-                cube.position.y=(height/2)-15;
-                cubes.push(cube);
+                cubes[i].geometry = new THREE.BoxGeometry(1, height, 1); 
+                cubes[i].position.y=(height/2)-15;
             }
-            
+            Start()
         }
 
 
@@ -94,6 +101,7 @@
 
 
         function Start(){
+            finishInstantly = false;
             if(document.getElementById("algorithmsChoice").value == "selectionSort"){
                 selectionSort(cubes)
             } else if(document.getElementById("algorithmsChoice").value == "BubbleSort"){
@@ -101,7 +109,7 @@
             }
         }
 
-        createArray()
+
         Start()
 
     </script>
