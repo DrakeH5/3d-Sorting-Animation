@@ -20,6 +20,7 @@
     <script src="swap.js"></script>
     <script src="swapColors.js"></script>
     <script src="selectionSort.js"></script>
+    <script src="bubbleSort.js"></script>
     <script>
 
         var scene = new THREE.Scene(); //created a three.js scene
@@ -66,11 +67,11 @@
         render();
 
         const delay = () => new Promise(res => setTimeout(res, document.getElementById("speedSlider").value));
-        
+
         finishInstantly = false;
 
 
-        selectionSort(cubes)
+        BubbleSort(cubes)
 
     </script>
   </body>
