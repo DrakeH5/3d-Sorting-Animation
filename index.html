@@ -2,7 +2,19 @@
   <head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script></head>
   <body>
 
-    <h2 style="position: absolute">Speed: <input type="range" min="1" max="100" value="10" class="slider" id="speedSlider"> <Button onclick="finishInstantly = true">Finish</Button></h2>
+    <div style="position: absolute">
+        <h2>Speed: <input type="range" min="1" max="100" value="10" class="slider" id="speedSlider"> 
+            <Button onclick="finishInstantly = true">Finish</Button>
+        </h2>
+
+        <h2 for="cars">Choose a Sorting Algorithm: 
+            <select name="algorithms" id="algorithmsChoice" onchange="Start()">
+                <option value="selectionSort">Selection Sort</option>
+                <option value="BubbleSort">Bubble Sort</option>
+            </select>
+        </h2>
+
+    </div>
 
     <style>
     body {
@@ -38,18 +50,23 @@
         renderer.render(scene, camera); //just render (show) everything on our canvas
 
 
-        var material = new THREE.MeshLambertMaterial({color: 0xFFCC00});
-
         var cubes = [];
 
-        for(var i=0; i<100; i++){
-            var height = Math.floor(Math.random() * 60) + 1;
-            var geometry = new THREE.BoxGeometry(1, height, 1); 
-            var cube = new THREE.Mesh(geometry, material);
-            scene.add(cube)
-            cube.position.x=i-75;
-            cube.position.y=(height/2)-15;
-            cubes.push(cube);
+        function createArray(){
+            var material = new THREE.MeshLambertMaterial({color: 0xFFCC00});
+
+            cubes = [];
+
+            for(var i=0; i<100; i++){
+                var height = Math.floor(Math.random() * 60) + 1;
+                var geometry = new THREE.BoxGeometry(1, height, 1); 
+                var cube = new THREE.Mesh(geometry, material);
+                scene.add(cube)
+                cube.position.x=i-75;
+                cube.position.y=(height/2)-15;
+                cubes.push(cube);
+            }
+            
         }
 
 
@@ -70,12 +87,22 @@
 
         render();
 
+
         const delay = () => new Promise(res => setTimeout(res, document.getElementById("speedSlider").value));
 
         finishInstantly = false;
 
 
-        BubbleSort(cubes)
+        function Start(){
+            if(document.getElementById("algorithmsChoice").value == "selectionSort"){
+                selectionSort(cubes)
+            } else if(document.getElementById("algorithmsChoice").value == "BubbleSort"){
+                BubbleSort(cubes)
+            }
+        }
+
+        createArray()
+        Start()
 
     </script>
   </body>
