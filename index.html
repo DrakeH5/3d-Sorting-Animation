@@ -25,8 +25,9 @@
         var scene = new THREE.Scene(); //created a three.js scene
 
         var camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000) //create a camera
-        camera.position.z = 50;
+        camera.position.z = 40;
         camera.position.y = 20;
+        camera.rotation.y = -6;
 
         var renderer = new THREE.WebGLRenderer({antialias: true}); //create renderer
         renderer.setClearColor("darkgrey"); //essentially a background color
@@ -42,11 +43,11 @@
         var cubes = [];
 
         for(var i=0; i<100; i++){
-            var height = Math.floor(Math.random() * 70) + 1;
+            var height = Math.floor(Math.random() * 60) + 1;
             var geometry = new THREE.BoxGeometry(1, height, 1); 
             var cube = new THREE.Mesh(geometry, material);
             scene.add(cube)
-            cube.position.x=i-50;
+            cube.position.x=i-75;
             cube.position.y=(height/2)-15;
             cubes.push(cube);
         }
