@@ -7,7 +7,9 @@ const selectionSort = async(cubes) => {
         
         for(var j=i+1; j<cubes.length; j++){
             swapColor(cubes[j], "red")
-            await delay()
+            if(finishInstantly == false){
+                await delay()
+            }
             swapColor(cubes[j], 0xFFCC00)
             if(cubes[j].position.y < cubes[minHeight].position.y){
                 swapColor(cubes[minHeight], 0xFFCC00)
