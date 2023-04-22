@@ -22,7 +22,6 @@
     <script src="selectionSort.js"></script>
     <script src="bubbleSort.js"></script>
     <script>
-
         var scene = new THREE.Scene(); //created a three.js scene
 
         var camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000) //create a camera
@@ -34,7 +33,6 @@
         renderer.setSize(window.innerWidth,window.innerHeight); //set renderer size to size of the page
 
         document.body.appendChild(renderer.domElement); //creates a canvas with our render's specifications
-
 
         renderer.render(scene, camera); //just render (show) everything on our canvas
 
@@ -57,6 +55,11 @@
         var light = new THREE.PointLight(0xFFFFFF, 1, 500); //creates a light (color, intensity, distance)
         light.position.set(10, 0, 25); //sets light position (x, y, z)
         scene.add(light); //add the light to the scene
+
+
+        document.body.onmousemove = function(evt) {
+            camera.rotation.y-=evt.movementX/10000;
+        };
 
 
         var render = function() {
