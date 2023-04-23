@@ -99,13 +99,6 @@
             cubes.push(cube);
         }
 
-        var geometry = new THREE.BoxGeometry(10, 10, 10); 
-            var cube = new THREE.Mesh(geometry, material);
-            scene.add(cube)
-            cube.position.z = 70
-            cubes.push(cube);
-
-
         function resetArray(){
             for(var i=0; i<cubes.length; i++){
                 var height = Math.floor(Math.random() * 60) + 1;
@@ -163,6 +156,28 @@
         function rotateCamera180(){
             this.tl = new TimelineMax().delay(0); 
             this.tl.to(camera.rotation, 1, {y: camera.rotation.y-Math.PI, ease: Expo.easeOut})
+        }
+
+
+
+        var light = new THREE.PointLight(0xFFFFFF, 10, 50); //creates a light (color, intensity, distance)
+        light.position.set(5, 15, 80); //sets light position (x, y, z)
+        scene.add(light); //add the light to the scene
+
+        var pathfindingCubes = [];
+
+        var material = new THREE.MeshLambertMaterial({color: 0xFFCC00});
+
+        for(var i=0; i<15; i++){
+            for(var j=0; j<10; j++){
+                var geometry = new THREE.BoxGeometry(1, 1, 1); 
+                var cube = new THREE.Mesh(geometry, material);
+                scene.add(cube)
+                cube.position.x=i*1.1-3;
+                cube.position.y = 12;
+                cube.position.z=j*1.1+53;
+                pathfindingCubes.push(cube);
+            }
         }
 
     </script>
