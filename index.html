@@ -8,7 +8,7 @@
         </h2>
 
         <h2 for="cars">Choose a Sorting Algorithm: 
-            <select name="algorithms" id="algorithmsChoice" onchange="Start()">
+            <select name="algorithms" id="algorithmsChoice" onchange="ChangedSortingAlgo()">
                 <option value="selectionSort">Selection Sort</option>
                 <option value="BubbleSort">Bubble Sort</option>
             </select>
@@ -107,6 +107,13 @@
             } else if(document.getElementById("algorithmsChoice").value == "BubbleSort"){
                 BubbleSort(cubes)
             }
+        }
+
+        async function ChangedSortingAlgo(){
+            finishInstantly = true;
+            await delay();
+            resetArray();
+            Start();
         }
 
 
