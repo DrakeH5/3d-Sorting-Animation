@@ -135,6 +135,15 @@
             }
         };
 
+        document.body.onmousedown = function(evt) {
+            var geometry = new THREE.BoxGeometry(1, 1, 1); 
+            var cube = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: "red"}));
+            scene.add(cube)
+            cube.position.x=highlightedCube.position.x;
+            cube.position.y=highlightedCube.position.y+1;
+            cube.position.z=highlightedCube.position.z;
+        }
+
 
         var render = function() {
           requestAnimationFrame(render);
