@@ -115,23 +115,23 @@
 
 
 
-        var geometry = new THREE.BoxGeometry(1, 1, 1); 
-            var throwAwayCube = new THREE.Mesh(geometry, material);
-            scene.add(throwAwayCube)
-            throwAwayCube.position.y=10000;
-            cubes.push(throwAwayCube);
+        var geometry = new THREE.BoxGeometry(1, 0.1, 1); 
+            var hightlightMarkerCube = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: "grey"}));
+            scene.add(hightlightMarkerCube)
+            hightlightMarkerCube.position.y=10000;
         raycaster = new THREE.Raycaster();
         const pointer = new THREE.Vector2();
-        var highlightedCube = throwAwayCube;
+        var highlightedCube = hightlightMarkerCube;
         document.body.onmousemove = function(evt) {
-            pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-            pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+            pointer.x = ( evt.clientX / window.innerWidth ) * 2 - 1;
+            pointer.y = - ( evt.clientY / window.innerHeight ) * 2 + 1;
             raycaster.setFromCamera( pointer, camera );
 			const intersects = raycaster.intersectObjects( scene.children, false );
-			if ( intersects.length > 0 && intersects[0].object.position.z > camera.position.z && intersects[0].object.material == material) {
-                swapColor(highlightedCube, 0xFFCC00)
+			if ( intersects.length > 0 && intersects[0].object != highlightedCube && intersects[0].object.position.z > camera.position.z && intersects[0].object.material == material) {
+                //swapColor(highlightedCube, 0xFFCC00)
                 highlightedCube = intersects[0].object;
-                swapColor(highlightedCube, "grey")
+                hightlightMarkerCube.position.set(highlightedCube.position.x, highlightedCube.position.y+0.5, highlightedCube.position.z)
+                //swapColor(highlightedCube, "grey")
             }
         };
 
