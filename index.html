@@ -2,21 +2,40 @@
   <head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script></head>
   <body>
 
-    <div style="position: absolute">
-        <h2>Speed: <input type="range" min="1" max="100" value="10" class="slider" id="speedSlider"> 
-            <Button onclick="finishInstantly = true">Finish</Button>
-        </h2>
+        <div style="position: absolute" id="sortingAlgosDiv">
 
-        <h2 for="cars">Choose a Sorting Algorithm: 
-            <select name="algorithms" id="algorithmsChoice" onchange="ChangedSortingAlgo()">
-                <option value="selectionSort">Selection Sort</option>
-                <option value="BubbleSort">Bubble Sort</option>
-            </select>
-        </h2>
+            <h1>Sorting</h1>
 
-        <Button onclick="resetArray()">Reset</Button>
+            <h2>Speed: <input type="range" min="1" max="100" value="10" class="slider" id="speedSlider"> 
+                <Button onclick="finishInstantly = true">Finish</Button>
+            </h2>
 
-    </div>
+            <h2>Choose a Sorting Algorithm: 
+                <select name="algorithms" id="algorithmsChoice" onchange="ChangedSortingAlgo()">
+                    <option value="selectionSort">Selection Sort</option>
+                    <option value="BubbleSort">Bubble Sort</option>
+                </select>
+            </h2>
+
+            <Button onclick="resetArray()">Reset</Button>
+
+        </div>
+
+
+        <div style="position: absolute; right: 0" id="pathfindingDiv">
+
+            <h1>Pathfinding</h1>
+
+            <h2>Choose a Block Type: 
+                <select name="PathfindingBlocks" id="PathfindingBlockChoice" onchange="ChangedPathfindingBlockChoice()" style="background: rgb(139, 135, 135)">
+                    <option value="Wall" style="background: rgb(139, 135, 135)">Wall</option>
+                    <option value="Start" style="background: rgb(6, 231, 10)">Start</option>
+                    <option value="End" style="background: rgb(246, 5, 5)">End</option>
+                </select>
+            </h2>
+
+        </div>
+
 
     <button class="next round" id="rotateBtn" onclick="rotateCamera180()">
         >
@@ -58,7 +77,6 @@
         width: 10%;
         font-size: 500%;
     }
-
     </style>
 
 
@@ -137,7 +155,7 @@
 
         document.body.onmousedown = function(evt) {
             var geometry = new THREE.BoxGeometry(1, 1, 1); 
-            var cube = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: "red"}));
+            var cube = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: getColorOfSelectedBlock()}));
             scene.add(cube)
             cube.position.x=highlightedCube.position.x;
             cube.position.y=highlightedCube.position.y+1;
@@ -203,6 +221,25 @@
                 cube.position.y = 12;
                 cube.position.z=j*1.1+53;
                 pathfindingCubes.push(cube);
+            }
+        }
+
+
+        function getColorOfSelectedBlock(){
+            var options = document.getElementById("PathfindingBlockChoice").getElementsByTagName('option')
+            for(var i=0; i<options.length; i++){
+                if(options[i].value == document.getElementById("PathfindingBlockChoice").value){
+                    return options[i].style.background
+                }
+            }
+        }
+
+        function ChangedPathfindingBlockChoice(){
+            var options = document.getElementById("PathfindingBlockChoice").getElementsByTagName('option')
+            for(var i=0; i<options.length; i++){
+                if(options[i].value == document.getElementById("PathfindingBlockChoice").value){
+                    document.getElementById("PathfindingBlockChoice").style.background = getColorOfSelectedBlock();
+                }
             }
         }
           
