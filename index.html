@@ -158,25 +158,30 @@
         var pathfindingEnd = '';
         var pathfindingcube;
         document.body.onmousedown = function(evt) {
-            geometry = new THREE.BoxGeometry(1, 1, 1); 
-            pathfindingcube = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: getColorOfSelectedBlock()}));
-            scene.add(pathfindingcube)
-            pathfindingcube.position.x=highlightedCube.position.x;
-            pathfindingcube.position.y=highlightedCube.position.y+1;
-            pathfindingcube.position.z=highlightedCube.position.z;
-            if(document.getElementById("PathfindingBlockChoice").value == "Start"){
-                if(pathfindingStart.length != 0){
-                    pathfindingStart.position.set(-100000, -100000, -10000);
+            pointer.x = ( evt.clientX / window.innerWidth ) * 2 - 1;
+            pointer.y = - ( evt.clientY / window.innerHeight ) * 2 + 1;
+            raycaster.setFromCamera( pointer, camera );
+			const intersects = raycaster.intersectObjects( scene.children, false );
+                if(intersects.length > 0){
+                geometry = new THREE.BoxGeometry(1, 1, 1); 
+                pathfindingcube = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: getColorOfSelectedBlock()}));
+                scene.add(pathfindingcube)
+                pathfindingcube.position.x=highlightedCube.position.x;
+                pathfindingcube.position.y=highlightedCube.position.y+1;
+                pathfindingcube.position.z=highlightedCube.position.z;
+                if(document.getElementById("PathfindingBlockChoice").value == "Start"){
+                    if(pathfindingStart.length != 0){
+                        pathfindingStart.position.set(-100000, -100000, -10000);
+                    }
+                    pathfindingStart = pathfindingcube;
+                } else if(document.getElementById("PathfindingBlockChoice").value == "End"){
+                    if(pathfindingEnd.length != 0){
+                        pathfindingEnd.position.set(-100000, -100000, -10000);
+                    }
+                    pathfindingEnd = pathfindingcube;
+                } else {
+                    pathfindingWalls.push(pathfindingcube)
                 }
-                pathfindingStart = pathfindingcube;
-                console.log(pathfindingStart)
-            } else if(document.getElementById("PathfindingBlockChoice").value == "End"){
-                if(pathfindingEnd.length != 0){
-                    pathfindingEnd.position.set(-100000, -100000, -10000);
-                }
-                pathfindingEnd = pathfindingcube;
-            } else {
-                pathfindingWalls.push(pathfindingcube)
             }
         }
 
