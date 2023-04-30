@@ -153,13 +153,31 @@
             }
         };
 
+        var pathfindingWalls = [];
+        var pathfindingStart ='';
+        var pathfindingEnd = '';
+        var pathfindingcube;
         document.body.onmousedown = function(evt) {
-            var geometry = new THREE.BoxGeometry(1, 1, 1); 
-            var cube = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: getColorOfSelectedBlock()}));
-            scene.add(cube)
-            cube.position.x=highlightedCube.position.x;
-            cube.position.y=highlightedCube.position.y+1;
-            cube.position.z=highlightedCube.position.z;
+            geometry = new THREE.BoxGeometry(1, 1, 1); 
+            pathfindingcube = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: getColorOfSelectedBlock()}));
+            scene.add(pathfindingcube)
+            pathfindingcube.position.x=highlightedCube.position.x;
+            pathfindingcube.position.y=highlightedCube.position.y+1;
+            pathfindingcube.position.z=highlightedCube.position.z;
+            if(document.getElementById("PathfindingBlockChoice").value == "Start"){
+                if(pathfindingStart.length != 0){
+                    pathfindingStart.position.set(-100000, -100000, -10000);
+                }
+                pathfindingStart = pathfindingcube;
+                console.log(pathfindingStart)
+            } else if(document.getElementById("PathfindingBlockChoice").value == "End"){
+                if(pathfindingEnd.length != 0){
+                    pathfindingEnd.position.set(-100000, -100000, -10000);
+                }
+                pathfindingEnd = pathfindingcube;
+            } else {
+                pathfindingWalls.push(pathfindingcube)
+            }
         }
 
 
