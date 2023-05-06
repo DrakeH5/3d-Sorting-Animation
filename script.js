@@ -64,7 +64,25 @@
             }
         };
 
+
+        function convertPathfindingCoordsToIndexes(nmb, isX){
+            if(isX){
+                nmb += 3;
+            } else {
+                nmb -= 53;
+            }
+            return nmb / 1.1;
+        }
+
         var pathfindingWalls = [];
+        var width = 15;
+        var height = 10;
+        for(var i=0; i<width; i++){
+            pathfindingWalls.push([]);
+            for(var j=0; j<height; j++){
+                pathfindingWalls[i].push(null)
+            }
+        }
         var pathfindingStart ='';
         var pathfindingEnd = '';
         var pathfindingcube;
@@ -91,7 +109,7 @@
                     }
                     pathfindingEnd = pathfindingcube;
                 } else {
-                    pathfindingWalls.push(pathfindingcube)
+                    pathfindingWalls[convertPathfindingCoordsToIndexes(pathfindingcube.position.x, true)][convertPathfindingCoordsToIndexes(pathfindingcube.position.z, false)] = pathfindingcube
                 }
             }
         }
@@ -146,8 +164,8 @@
 
         var material = new THREE.MeshLambertMaterial({color: 0xFFCC00});
 
-        for(var i=0; i<15; i++){
-            for(var j=0; j<10; j++){
+        for(var i=0; i<width; i++){
+            for(var j=0; j<height; j++){
                 var geometry = new THREE.BoxGeometry(1, 1, 1); 
                 var cube = new THREE.Mesh(geometry, material);
                 scene.add(cube)
@@ -175,4 +193,9 @@
                     document.getElementById("PathfindingBlockChoice").style.background = getColorOfSelectedBlock();
                 }
             }
+        }
+
+
+        function startPathfinding(){
+            aStarPathfinding(convertPathfindingCoordsToIndexes(pathfindingStart.position.x, true), convertPathfindingCoordsToIndexes(pathfindingStart.position.z, false), convertPathfindingCoordsToIndexes(pathfindingEnd.position.x, true), convertPathfindingCoordsToIndexes(pathfindingEnd.position.z, false), width, height, pathfindingWalls);
         }
