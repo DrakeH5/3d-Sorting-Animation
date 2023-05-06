@@ -198,5 +198,6 @@
 
 
         function startPathfinding(){
+            document.getElementById("speedSlider").value = 150;
             aStarPathfinding(convertPathfindingCoordsToIndexes(pathfindingStart.position.x, true), convertPathfindingCoordsToIndexes(pathfindingStart.position.z, false), convertPathfindingCoordsToIndexes(pathfindingEnd.position.x, true), convertPathfindingCoordsToIndexes(pathfindingEnd.position.z, false), width, height, pathfindingWalls, pathfindingCubes);
         }

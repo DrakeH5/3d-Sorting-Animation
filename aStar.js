@@ -1,7 +1,8 @@
-function aStarPathfinding(startX, startZ, endX, endZ, width, height, walls, cubes){
+const aStarPathfinding = async(startX, startZ, endX, endZ, width, height, walls, cubes) => {
     var currentPos = [startX, startZ]
     while(currentPos[0] != endX || currentPos[1] != endZ){
         currentPos = searchNearby(currentPos[0], currentPos[1], endX, endZ, width, height, walls, cubes)
+        await delay()
     }
 }
  
