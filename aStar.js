@@ -4,8 +4,10 @@ function aStarPathfinding(startX, startZ, endX, endZ, width, height, walls, cube
         var thisXIndex = startX + i;
         for(var j = -1; j <= 1; j++){
             var thisZIndex = startZ + j; 
-            collectionOfNearbyCubeVals.push(calcDistanceForAStar(startX, startZ, endX, endZ, thisXIndex, thisXIndex))
-            swapColor(cubes[thisXIndex][thisZIndex], "green");
+            if(thisXIndex >= 0 && thisXIndex < width && thisZIndex >= 0 && thisZIndex < height){
+                collectionOfNearbyCubeVals.push(calcDistanceForAStar(startX, startZ, endX, endZ, thisXIndex, thisXIndex))
+                swapColor(cubes[thisXIndex][thisZIndex], "green");
+            }
         }
      }
      //findSmallestCubeVal(collectionOfNearbyCubeVals);
