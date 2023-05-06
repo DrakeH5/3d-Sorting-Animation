@@ -71,7 +71,7 @@
             } else {
                 nmb -= 53;
             }
-            return nmb / 1.1;
+            return Math.floor(nmb / 1.1);
         }
 
         var pathfindingWalls = [];
@@ -165,6 +165,7 @@
         var material = new THREE.MeshLambertMaterial({color: 0xFFCC00});
 
         for(var i=0; i<width; i++){
+            pathfindingCubes.push([])
             for(var j=0; j<height; j++){
                 var geometry = new THREE.BoxGeometry(1, 1, 1); 
                 var cube = new THREE.Mesh(geometry, material);
@@ -172,7 +173,7 @@
                 cube.position.x=i*1.1-3;
                 cube.position.y = 12;
                 cube.position.z=j*1.1+53;
-                pathfindingCubes.push(cube);
+                pathfindingCubes[i].push(cube);
             }
         }
 
@@ -197,5 +198,5 @@
 
 
         function startPathfinding(){
-            aStarPathfinding(convertPathfindingCoordsToIndexes(pathfindingStart.position.x, true), convertPathfindingCoordsToIndexes(pathfindingStart.position.z, false), convertPathfindingCoordsToIndexes(pathfindingEnd.position.x, true), convertPathfindingCoordsToIndexes(pathfindingEnd.position.z, false), width, height, pathfindingWalls);
+            aStarPathfinding(convertPathfindingCoordsToIndexes(pathfindingStart.position.x, true), convertPathfindingCoordsToIndexes(pathfindingStart.position.z, false), convertPathfindingCoordsToIndexes(pathfindingEnd.position.x, true), convertPathfindingCoordsToIndexes(pathfindingEnd.position.z, false), width, height, pathfindingWalls, pathfindingCubes);
         }
