@@ -11,7 +11,7 @@ function searchNearby(startX, startZ, endX, endZ, width, height, walls, cubes){
         var thisXIndex = startX + i;
         for(var j = -1; j <= 1; j++){
             var thisZIndex = startZ + j; 
-            if((thisXIndex != startX || thisZIndex != startZ) && thisXIndex >= 0 && thisXIndex < width && thisZIndex >= 0 && thisZIndex < height){
+            if(walls[thisXIndex][thisZIndex] == null && (thisXIndex != startX || thisZIndex != startZ) && thisXIndex >= 0 && thisXIndex < width && thisZIndex >= 0 && thisZIndex < height){
                 collectionOfNearbyCubeVals.push([thisXIndex, thisZIndex, calcDistanceForAStar(startX, startZ, endX, endZ, thisXIndex, thisZIndex)])
                 if(!(cubes[thisXIndex][thisZIndex].material.color.r == 0 && cubes[thisXIndex][thisZIndex].material.color.g == 0.5019607843137255 && cubes[thisXIndex][thisZIndex].material.color.b == 0)){
                     swapColor(cubes[thisXIndex][thisZIndex], "lightblue");
