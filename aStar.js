@@ -1,12 +1,19 @@
 const aStarPathfinding = async(startX, startZ, endX, endZ, width, height, walls, cubes) => {
     var currentPos = [startX, startZ]
+    var closedList = []
+    for(var i=0; i<width; i++){
+        closedList.push([])
+        for(var j=0; j<height; j++){
+            closedList[i].push(null)
+        }
+    }
     while(currentPos[0] != endX || currentPos[1] != endZ){
-        currentPos = searchNearby(currentPos[0], currentPos[1], endX, endZ, width, height, walls, cubes)
+        currentPos = searchNearby(currentPos[0], currentPos[1], endX, endZ, width, height, walls, cubes, closedList)
         await delay()
     }
 }
  
-function searchNearby(startX, startZ, endX, endZ, width, height, walls, cubes){
+function searchNearby(startX, startZ, endX, endZ, width, height, walls, cubes, closedList){
     var collectionOfNearbyCubeVals = []
      for(var i = -1; i <= 1; i++){
         var thisXIndex = startX + i;
@@ -15,7 +22,8 @@ function searchNearby(startX, startZ, endX, endZ, width, height, walls, cubes){
             if((thisXIndex != startX || thisZIndex != startZ) && 
                 thisXIndex >= 0 && thisXIndex < width && 
                 thisZIndex >= 0 && thisZIndex < height &&
-                walls[thisXIndex][thisZIndex] == null){
+                walls[thisXIndex][thisZIndex] == null &&
+                closedList[thisXIndex][thisZIndex] == null){
                 collectionOfNearbyCubeVals.push([thisXIndex, thisZIndex, calcDistanceForAStar(startX, startZ, endX, endZ, thisXIndex, thisZIndex)])
                 if(!(cubes[thisXIndex][thisZIndex].material.color.r == 0 && cubes[thisXIndex][thisZIndex].material.color.g == 0.5019607843137255 && cubes[thisXIndex][thisZIndex].material.color.b == 0)){
                     swapColor(cubes[thisXIndex][thisZIndex], "lightblue");
@@ -25,6 +33,7 @@ function searchNearby(startX, startZ, endX, endZ, width, height, walls, cubes){
      }
      var smallest = collectionOfNearbyCubeVals[findSmallestCubeVal(collectionOfNearbyCubeVals)];
      swapColor(cubes[smallest[0]][smallest[1]], "green")
+     closedList[smallest[0]][smallest[1]] = true;
      return [smallest[0], smallest[1]];
 }
 
