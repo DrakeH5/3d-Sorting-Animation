@@ -1,9 +1,8 @@
 function aStarPathfinding(startX, startZ, endX, endZ, width, height, walls, cubes){
     var currentPos = [startX, startZ]
-    //while(currentPos != [endX, endZ]){
+    while(currentPos[0] != endX || currentPos[1] != endZ){
         currentPos = searchNearby(currentPos[0], currentPos[1], endX, endZ, width, height, walls, cubes)
-        console.log(currentPos, endX, endZ)
-    //}
+    }
 }
  
 function searchNearby(startX, startZ, endX, endZ, width, height, walls, cubes){
@@ -14,7 +13,9 @@ function searchNearby(startX, startZ, endX, endZ, width, height, walls, cubes){
             var thisZIndex = startZ + j; 
             if((thisXIndex != startX || thisZIndex != startZ) && thisXIndex >= 0 && thisXIndex < width && thisZIndex >= 0 && thisZIndex < height){
                 collectionOfNearbyCubeVals.push([thisXIndex, thisZIndex, calcDistanceForAStar(startX, startZ, endX, endZ, thisXIndex, thisZIndex)])
-                swapColor(cubes[thisXIndex][thisZIndex], "lightblue");
+                if(!(cubes[thisXIndex][thisZIndex].material.color.r == 0 && cubes[thisXIndex][thisZIndex].material.color.g == 0.5019607843137255 && cubes[thisXIndex][thisZIndex].material.color.b == 0)){
+                    swapColor(cubes[thisXIndex][thisZIndex], "lightblue");
+                }
             }
         }
      }
@@ -34,7 +35,6 @@ function findSmallestCubeVal(cubeVals){
     var min = cubeVals[0][2];
     var minIndex = 0;
     for(var i=1; i<cubeVals.length; i++){
-        console.log(cubeVals[i][2])
         if(min > cubeVals[i][2]){
             min = cubeVals[i][2];
             minIndex = i
