@@ -5,12 +5,13 @@ function aStarPathfinding(startX, startZ, endX, endZ, width, height, walls, cube
         for(var j = -1; j <= 1; j++){
             var thisZIndex = startZ + j; 
             if(thisXIndex >= 0 && thisXIndex < width && thisZIndex >= 0 && thisZIndex < height){
-                collectionOfNearbyCubeVals.push(calcDistanceForAStar(startX, startZ, endX, endZ, thisXIndex, thisXIndex))
-                swapColor(cubes[thisXIndex][thisZIndex], "green");
+                collectionOfNearbyCubeVals.push([thisXIndex, thisZIndex, calcDistanceForAStar(startX, startZ, endX, endZ, thisXIndex, thisXIndex)])
+                swapColor(cubes[thisXIndex][thisZIndex], "lightblue");
             }
         }
      }
-     //findSmallestCubeVal(collectionOfNearbyCubeVals);
+     var smallest = collectionOfNearbyCubeVals[findSmallestCubeVal(collectionOfNearbyCubeVals)];
+     swapColor(cubes[smallest[0]][smallest[1]], "green")
 }
 
 function distanceFormula(x1, y1, x2, y2){
@@ -21,9 +22,9 @@ function calcDistanceForAStar(startX, startZ, endX, endZ, xIndex, zIndex){
 }
 
 function findSmallestCubeVal(cubeVals){
-    var min = cubeVals[0];
+    var min = 0;
     for(var i=1; i<cubeVals.length; i++){
-        if(min > cubeVals[i]){
+        if(min > cubeVals[i][2]){
             min = i;
         }
     }
